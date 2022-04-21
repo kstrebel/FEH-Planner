@@ -1,0 +1,58 @@
+﻿@model Build
+
+@{
+    ViewBag.Title = $"{ ViewBag.Action} Build";
+}
+
+<h2>@ViewBag.Action Build</h2>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="BuildID" />
+
+    <div class="form-group">
+        <label asp-for="Name">Build Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Unit">Unit</label>
+        <select asp-for="Unit" class="form-control">
+            <option value="0">Select a unit</option>
+            @foreach (Unit u in ViewBag.Units)
+            {
+                <option value="@u.UnitID">@u.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Weapon">Weapon</label>
+        <input asp-for="Weapon" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="A_Skill">A Skill</label>
+        <input asp-for="A_Skill" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="B_Skill">B Skill</label>
+        <input asp-for="B_Skill" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="C_Skill">C Skill</label>
+        <input asp-for="C_Skill" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="S_Skill">S Skill</label>
+        <input asp-for="S_Skill" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-dark">@ViewBag.Action</button>
+
+    @if (ViewBag.Action == "Edit") {
+    <a asp-action="Details" asp-controller="Build" asp-route-id="@Model.BuildID" type="submit" class="btn btn-dark">Cancel</a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="Home" class="btn btn-dark">Cancel</a>
+    }
+</form>

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Build>
+
+@{
+    ViewBag.Title = "Build Manager";
+}
+
+<a asp-action="Add" asp-controller="Contact" class="ml-2">Add Build</a>
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th>Build Name</th>
+            <th>Unit</th>
+            <th>Weapon</th>
+            <th>A Skill</th>
+            <th>B Skill</th>
+            <th>C Skill</th>
+            <th>S Skill</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Build build in Model)
+        {
+            <tr>
+                <td>@build.Name</td>
+                <td>@build.Unit.Name</td>
+                <td>@build.Weapon.Name</td>
+                <td>@build.A_Skill.Name</td>
+                <td>@build.B_Skill.Name</td>
+                <td>@build.C_Skill.Name</td>
+                <td>@build.S_Skill.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

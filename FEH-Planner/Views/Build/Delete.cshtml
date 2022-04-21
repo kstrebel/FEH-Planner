@@ -1,0 +1,16 @@
+﻿@model Build
+
+@{
+    ViewBag.Title = $"Delete Build";
+}
+
+<h2>Delete Build</h2>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="BuildID" />
+
+    <p>Do you really want to delete <b>@Model.Name</b>?</p>
+
+    <button type="submit" class="btn btn-dark">Yes</button>
+    <a asp-action="Details" asp-controller="Build" asp-route-id="@Model.BuildID" class="btn btn-dark">No</a>
+</form>

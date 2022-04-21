@@ -1,0 +1,43 @@
+﻿@model Build
+
+@{
+    ViewBag.Title = "Build Details";
+}
+
+<h2>Build Details</h2>
+
+<ul class="list-group">
+    <li class="list-group-item">
+        <label>Name:</label>
+        @Model.Name
+    </li>
+    <li class="list-group-item">
+        <label>Unit:</label>
+        @Model.Unit
+    </li>
+    <li class="list-group-item">
+        <label>Weapon:</label>
+        @Model.Weapon
+    </li>
+    <li class="list-group-item">
+        <label>A_Skill:</label>
+        @Model.A_Skill
+    </li>
+    <li class="list-group-item">
+        <label>B Skill:</label>
+        @Model.B_Skill
+    </li>
+    <li class="list-group-item">
+        <label>C Skill:</label>
+        @Model.C_Skill
+    </li>
+    <li class="list-group-item">
+        <label>S Skill:</label>
+        @Model.S_Skill
+    </li>
+    <li class="list-group-item">
+        <a asp-action="Edit" asp-controller="Build" asp-route-id="@Model.BuildID" class="btn btn-dark">Edit</a>
+        <a asp-action="Delete" asp-controller="Build" asp-route-id="@Model.BuildID" class="btn btn-dark">Delete</a>
+        <a asp-action="Index" asp-controller="Home" class="btn btn-dark">Home</a>
+    </li>
+</ul>
