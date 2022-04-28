@@ -20,6 +20,7 @@ namespace FEH_Planner.Controllers
         public IActionResult Details(int id)
         {
             var build = context.Builds.Include(b => b.Name).FirstOrDefault(b => b.BuildID == id);
+            //var weapon = context.Skills.Include(s => s.Name).FirstOrDefault(w => w.WeaponID == id);
             return View(build);
         }
 
@@ -28,6 +29,11 @@ namespace FEH_Planner.Controllers
         {
             ViewBag.Action = "Add";
             ViewBag.Units = context.Units.OrderBy(b => b.Name).ToList();
+            ViewBag.Weapons = context.Skills.Where(s => s.Slot == 'w').OrderBy(w => w.Name).ToList();
+            ViewBag.A_Skills = context.Skills.Where(s => s.Slot == 'a').OrderBy(a => a.Name).ToList();
+            ViewBag.B_Skills = context.Skills.Where(s => s.Slot == 'b').OrderBy(b => b.Name).ToList();
+            ViewBag.C_Skills = context.Skills.Where(s => s.Slot == 'c').OrderBy(c => c.Name).ToList();
+            ViewBag.S_Skills = context.Skills.Where(s => s.Slot == 's').OrderBy(s => s.Name).ToList();
             return View("Edit", new Build());
         }
 
@@ -36,6 +42,11 @@ namespace FEH_Planner.Controllers
         {
             ViewBag.Action = "Edit";
             ViewBag.Units = context.Units.OrderBy(b => b.Name).ToList();
+            ViewBag.Weapons = context.Skills.Where(s => s.Slot == 'w').OrderBy(w => w.Name).ToList();
+            ViewBag.A_Skills = context.Skills.Where(s => s.Slot == 'a').OrderBy(a => a.Name).ToList();
+            ViewBag.B_Skills = context.Skills.Where(s => s.Slot == 'b').OrderBy(b => b.Name).ToList();
+            ViewBag.C_Skills = context.Skills.Where(s => s.Slot == 'c').OrderBy(c => c.Name).ToList();
+            ViewBag.S_Skills = context.Skills.Where(s => s.Slot == 's').OrderBy(s => s.Name).ToList();
 
             var build = context.Builds.Include(b => b.Name).FirstOrDefault(b => b.BuildID == id);
             return View(build);
@@ -45,6 +56,8 @@ namespace FEH_Planner.Controllers
         public IActionResult Edit(Build build)
         {
             string action = (build.BuildID == 0) ? "Add" : "Edit";
+
+            build.UnitID = build.Unit.UnitID;
 
             if (ModelState.IsValid)
             {
@@ -67,6 +80,11 @@ namespace FEH_Planner.Controllers
             {
                 ViewBag.Action = action;
                 ViewBag.Units = context.Units.OrderBy(b => b.Name).ToList();
+                ViewBag.Weapons = context.Skills.Where(s => s.Slot == 'w').OrderBy(w => w.Name).ToList();
+                ViewBag.A_Skills = context.Skills.Where(s => s.Slot == 'a').OrderBy(a => a.Name).ToList();
+                ViewBag.B_Skills = context.Skills.Where(s => s.Slot == 'b').OrderBy(b => b.Name).ToList();
+                ViewBag.C_Skills = context.Skills.Where(s => s.Slot == 'c').OrderBy(c => c.Name).ToList();
+                ViewBag.S_Skills = context.Skills.Where(s => s.Slot == 's').OrderBy(s => s.Name).ToList();
                 return View(build);
             }
         }

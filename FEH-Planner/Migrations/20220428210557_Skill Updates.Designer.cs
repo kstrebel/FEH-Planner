@@ -4,14 +4,16 @@ using FEH_Planner.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FEH_Planner.Migrations
 {
     [DbContext(typeof(FEHPlannerContext))]
-    partial class FEHPlannerContextModelSnapshot : ModelSnapshot
+    [Migration("20220428210557_Skill Updates")]
+    partial class SkillUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

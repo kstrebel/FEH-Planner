@@ -4,7 +4,7 @@
     ViewBag.Title = "Build Manager";
 }
 
-<a asp-action="Add" asp-controller="Contact" class="ml-2">Add Build</a>
+<a asp-action="Add" asp-controller="Build" class="ml-2">Add Build</a>
 <table class="table mt-2">
     <thead>
         <tr>
@@ -20,15 +20,19 @@
     <tbody>
         @foreach (Build build in Model)
         {
-            <tr>
-                <td>@build.Name</td>
-                <td>@build.Unit.Name</td>
-                <td>@build.Weapon.Name</td>
-                <td>@build.A_Skill.Name</td>
-                <td>@build.B_Skill.Name</td>
-                <td>@build.C_Skill.Name</td>
-                <td>@build.S_Skill.Name</td>
-            </tr>
+        <tr>
+            <td>@build.Name</td>
+            <td>@build.Unit.Name</td>
+            <td>@((build.WeaponID == null) ? "sus!" : build.Weapon.Name)</td>
+            <td>@((build.A_SkillID == null) ? "sus!" : build.A_Skill.Name)</td>
+            <td>@((build.B_SkillID == null) ? "sus!" : build.B_Skill.Name)</td>
+            <td>@((build.C_SkillID == null) ? "sus!" : build.C_Skill.Name)</td>
+            <td>@((build.S_SkillID == null) ? "sus!" : build.S_Skill.Name)</td>
+            @*<td>@build.A_Skill.Name</td>
+        <td>@build.B_Skill.Name</td>
+        <td>@build.C_Skill.Name</td>
+        <td>@build.S_Skill.Name</td>*@
+        </tr>
         }
     </tbody>
 </table>

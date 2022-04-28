@@ -27,23 +27,53 @@
     </div>
     <div class="form-group">
         <label asp-for="Weapon">Weapon</label>
-        <input asp-for="Weapon" class="form-control" />
+        <select asp-for="Weapon" class="form-control">
+            <option value="0">Select a weapon</option>
+            @foreach (Skill w in ViewBag.Weapons)
+            {
+                <option value="@w.SkillID">@w.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="A_Skill">A Skill</label>
-        <input asp-for="A_Skill" class="form-control" />
+        <select asp-for="A_Skill" class="form-control">
+            <option value="0">Select an A skill</option>
+            @foreach (Skill a in ViewBag.A_Skills)
+            {
+                <option value="@a.SkillID">@a.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="B_Skill">B Skill</label>
-        <input asp-for="B_Skill" class="form-control" />
+        <select asp-for="B_Skill" class="form-control">
+            <option value="0">Select a B skill</option>
+            @foreach (Skill b in ViewBag.B_Skills)
+            {
+                <option value="@b.SkillID">@b.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="C_Skill">C Skill</label>
-        <input asp-for="C_Skill" class="form-control" />
+        <select asp-for="C_Skill" class="form-control">
+            <option value="0">Select a C skill</option>
+            @foreach (Skill c in ViewBag.C_Skills)
+            {
+                <option value="@c.SkillID">@c.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
         <label asp-for="S_Skill">S Skill</label>
-        <input asp-for="S_Skill" class="form-control" />
+        <select asp-for="S_Skill" class="form-control">
+            <option value="0">Select an S skill</option>
+            @foreach (Skill s in ViewBag.S_Skills)
+            {
+                <option value="@s.SkillID">@s.Name</option>
+            }
+        </select>
     </div>
 
     <button type="submit" class="btn btn-dark">@ViewBag.Action</button>

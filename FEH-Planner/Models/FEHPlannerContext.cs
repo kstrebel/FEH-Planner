@@ -39,8 +39,8 @@ namespace FEH_Planner.Models
                 );
 
             modelBuilder.Entity<Build>().HasData(
-                new Build { BuildID = 1, Name = "First", UnitID = 5, WeaponID = 1, A_SkillID = 3, B_SkillID = 4, C_SkillID = 6 },
-                new Build { BuildID = 2, Name = "Second", UnitID = 246, WeaponID = 7, A_SkillID = 4, B_SkillID = 4, C_SkillID = 6 }
+                new Build { BuildID = 1, Name = "First", UnitID = 5, WeaponID = 7, A_SkillID = 3, B_SkillID = 4, C_SkillID = 6, S_SkillID = 6 },
+                new Build { BuildID = 2, Name = "Second", UnitID = 246, A_SkillID = 2, B_SkillID = 4, C_SkillID = 6 }
                 );
         }
     }
