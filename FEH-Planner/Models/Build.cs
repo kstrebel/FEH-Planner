@@ -19,7 +19,7 @@ namespace FEH_Planner.Models
         public int UnitID { get; set; }
         [ForeignKey("UnitID")]
         [InverseProperty("BuildUnits")]
-        public Unit Unit;
+        public Unit Unit { get; set; }
 
         //[Required(ErrorMessage ="Please select a rarity.")]
         //public int Rarity { get; set; }
