@@ -19,7 +19,13 @@ namespace FEH_Planner.Controllers
 
         public IActionResult Details(int id)
         {
-            var build = context.Builds.Include(b => b.Name).FirstOrDefault(b => b.BuildID == id);
+            var build = context.Builds.Include(b => b.Unit)
+                .Include(b => b.Weapon)
+                .Include(b => b.A_Skill)
+                .Include(b => b.B_Skill)
+                .Include(b => b.C_Skill)
+                .Include(b => b.S_Skill)
+                .FirstOrDefault(b => b.BuildID == id);
             //var weapon = context.Skills.Include(s => s.Name).FirstOrDefault(w => w.WeaponID == id);
             return View(build);
         }
@@ -48,7 +54,13 @@ namespace FEH_Planner.Controllers
             ViewBag.C_Skills = context.Skills.Where(s => s.Slot == 'c').OrderBy(c => c.Name).ToList();
             ViewBag.S_Skills = context.Skills.Where(s => s.Slot == 's').OrderBy(s => s.Name).ToList();
 
-            var build = context.Builds.Include(b => b.Name).FirstOrDefault(b => b.BuildID == id);
+            var build = context.Builds.Include(b => b.Unit)
+                .Include(b => b.Weapon)
+                .Include(b => b.A_Skill)
+                .Include(b => b.B_Skill)
+                .Include(b => b.C_Skill)
+                .Include(b => b.S_Skill)
+                .FirstOrDefault(b => b.BuildID == id);
             return View(build);
         }
 
@@ -57,7 +69,11 @@ namespace FEH_Planner.Controllers
         {
             string action = (build.BuildID == 0) ? "Add" : "Edit";
 
-            build.UnitID = build.Unit.UnitID;
+            if (build.WeaponID == 0) { build.WeaponID = null; }
+            if (build.A_SkillID == 0) { build.A_SkillID = null; }
+            if (build.B_SkillID == 0) { build.B_SkillID = null; }
+            if (build.C_SkillID == 0) { build.C_SkillID = null; }
+            if (build.S_SkillID == 0) { build.S_SkillID = null; }
 
             if (ModelState.IsValid)
             {
@@ -92,7 +108,12 @@ namespace FEH_Planner.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var build = context.Builds.Include(b => b.Name).FirstOrDefault(b => b.BuildID == id);
+            var build = context.Builds.Include(b => b.Unit)
+                .Include(b => b.Weapon)
+                .Include(b => b.A_Skill)
+                .Include(b => b.B_Skill)
+                .Include(b => b.C_Skill)
+                .Include(b => b.S_Skill).FirstOrDefault(b => b.BuildID == id);
             return View(build);
         }
 

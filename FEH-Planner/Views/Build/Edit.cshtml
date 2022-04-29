@@ -16,8 +16,8 @@
         <input asp-for="Name" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Unit">Unit</label>
-        <select asp-for="Unit" class="form-control">
+        <label asp-for="UnitID">Unit</label>
+        <select asp-for="UnitID" class="form-control">
             <option value="0">Select a unit</option>
             @foreach (Unit u in ViewBag.Units)
             {
@@ -26,8 +26,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="Weapon">Weapon</label>
-        <select asp-for="Weapon" class="form-control">
+        <label asp-for="WeaponID">Weapon</label>
+        <select asp-for="WeaponID" class="form-control">
             <option value="0">Select a weapon</option>
             @foreach (Skill w in ViewBag.Weapons)
             {
@@ -36,8 +36,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="A_Skill">A Skill</label>
-        <select asp-for="A_Skill" class="form-control">
+        <label asp-for="A_SkillID">A Skill</label>
+        <select asp-for="A_SkillID" class="form-control">
             <option value="0">Select an A skill</option>
             @foreach (Skill a in ViewBag.A_Skills)
             {
@@ -46,8 +46,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="B_Skill">B Skill</label>
-        <select asp-for="B_Skill" class="form-control">
+        <label asp-for="B_SkillID">B Skill</label>
+        <select asp-for="B_SkillID" class="form-control">
             <option value="0">Select a B skill</option>
             @foreach (Skill b in ViewBag.B_Skills)
             {
@@ -56,8 +56,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="C_Skill">C Skill</label>
-        <select asp-for="C_Skill" class="form-control">
+        <label asp-for="C_SkillID">C Skill</label>
+        <select asp-for="C_SkillID" class="form-control">
             <option value="0">Select a C skill</option>
             @foreach (Skill c in ViewBag.C_Skills)
             {
@@ -66,8 +66,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="S_Skill">S Skill</label>
-        <select asp-for="S_Skill" class="form-control">
+        <label asp-for="S_SkillID">S Skill</label>
+        <select asp-for="S_SkillID" class="form-control">
             <option value="0">Select an S skill</option>
             @foreach (Skill s in ViewBag.S_Skills)
             {

@@ -21,17 +21,13 @@
         @foreach (Build build in Model)
         {
         <tr>
-            <td>@build.Name</td>
+            <td><a asp-action="Details" asp-controller="Build" asp-route-id="@build.BuildID">@build.Name</a></td>
             <td>@build.Unit.Name</td>
-            <td>@((build.WeaponID == null) ? "sus!" : build.Weapon.Name)</td>
-            <td>@((build.A_SkillID == null) ? "sus!" : build.A_Skill.Name)</td>
-            <td>@((build.B_SkillID == null) ? "sus!" : build.B_Skill.Name)</td>
-            <td>@((build.C_SkillID == null) ? "sus!" : build.C_Skill.Name)</td>
-            <td>@((build.S_SkillID == null) ? "sus!" : build.S_Skill.Name)</td>
-            @*<td>@build.A_Skill.Name</td>
-        <td>@build.B_Skill.Name</td>
-        <td>@build.C_Skill.Name</td>
-        <td>@build.S_Skill.Name</td>*@
+            <td>@((build.WeaponID == null) ? "" : build.Weapon.Name)</td>
+            <td>@((build.A_SkillID == null) ? "" : build.A_Skill.Name)</td>
+            <td>@((build.B_SkillID == null) ? "" : build.B_Skill.Name)</td>
+            <td>@((build.C_SkillID == null) ? "" : build.C_Skill.Name)</td>
+            <td>@((build.S_SkillID == null) ? "" : build.S_Skill.Name)</td>
         </tr>
         }
     </tbody>

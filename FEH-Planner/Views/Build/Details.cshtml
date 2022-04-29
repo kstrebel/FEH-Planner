@@ -13,27 +13,27 @@
     </li>
     <li class="list-group-item">
         <label>Unit:</label>
-        @Model.Unit
+        @Model.Unit.Name
     </li>
     <li class="list-group-item">
         <label>Weapon:</label>
-        @Model.Weapon
+        @((Model.WeaponID == null) ? "" :Model.Weapon.Name)
     </li>
     <li class="list-group-item">
         <label>A_Skill:</label>
-        @Model.A_Skill
+        @((Model.A_SkillID == null) ? "" :Model.A_Skill.Name)
     </li>
     <li class="list-group-item">
         <label>B Skill:</label>
-        @Model.B_Skill
+        @((Model.B_SkillID == null) ? "" :Model.B_Skill.Name)
     </li>
     <li class="list-group-item">
         <label>C Skill:</label>
-        @Model.C_Skill
+        @((Model.C_SkillID == null) ? "" :Model.C_Skill.Name)
     </li>
     <li class="list-group-item">
         <label>S Skill:</label>
-        @Model.S_Skill
+        @((Model.S_SkillID == null) ? "" :Model.S_Skill.Name)
     </li>
     <li class="list-group-item">
         <a asp-action="Edit" asp-controller="Build" asp-route-id="@Model.BuildID" class="btn btn-dark">Edit</a>
