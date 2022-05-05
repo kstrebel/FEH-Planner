@@ -1,0 +1,74 @@
+﻿@model FEH_Planner.Models.Unit
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Unit</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UnitID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Epithet" class="control-label"></label>
+                <input asp-for="Epithet" class="form-control" />
+                <span asp-validation-for="Epithet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Entry1" class="control-label"></label>
+                <input asp-for="Entry1" class="form-control" />
+                <span asp-validation-for="Entry1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Entry2" class="control-label"></label>
+                <input asp-for="Entry2" class="form-control" />
+                <span asp-validation-for="Entry2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MovementType" class="control-label"></label>
+                <input asp-for="MovementType" class="form-control" />
+                <span asp-validation-for="MovementType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeaponType" class="control-label"></label>
+                <input asp-for="WeaponType" class="form-control" />
+                <span asp-validation-for="WeaponType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpecialType" class="control-label"></label>
+                <input asp-for="SpecialType" class="form-control" />
+                <span asp-validation-for="SpecialType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability" class="control-label"></label>
+                <input asp-for="Availability" class="form-control" />
+                <span asp-validation-for="Availability" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LowestRarity" class="control-label"></label>
+                <input asp-for="LowestRarity" class="form-control" />
+                <span asp-validation-for="LowestRarity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

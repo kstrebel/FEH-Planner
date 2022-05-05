@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Skill>
+
+@{
+    ViewBag.Title = "Skill Manager";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" asp-controller="Skill" class="ml-2">Add Skill</a>
+</p>
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Slot)</th>
+            <th>@Html.DisplayNameFor(model => model.SP)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.Inheritable)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (Skill skill in Model)
+{
+        <tr>
+            <td>@Html.DisplayFor(modelItem => skill.Name)</td>
+            <td>@Html.DisplayFor(modelItem => skill.Slot)</td>
+            <td>@Html.DisplayFor(modelItem => skill.SP)</td>
+            <td>@Html.DisplayFor(modelItem => skill.Description)</td>
+            <td>@Html.DisplayFor(modelItem => skill.Inheritable)</td>
+            <td><a asp-action="Edit" asp-controller="Skill" asp-route-id="@skill.SkillID">Edit</a> 
+            |   <a asp-action="Details" asp-controller="Skill" asp-route-id="@skill.SkillID">Details</a> |
+                <a asp-action="Delete" asp-controller="Skill" asp-route-id="@skill.SkillID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
