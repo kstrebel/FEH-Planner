@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; //for [ForeignKey]
 using System.Collections.Generic; //for ICollection
 
 namespace FEH_Planner.Models
@@ -10,7 +10,13 @@ namespace FEH_Planner.Models
         public int SkillID { get; set; }
 
         public string Name { get; set; }
-        public char Slot { get; set; }
+
+        //foreign key
+        public int SlotID { get; set; }
+        [ForeignKey("SlotID")]
+        [InverseProperty("SkillSlot")]
+        public Slot Slot { get; set; }
+
         public int SP { get; set; }
         public string Description { get; set; }
         public bool Inheritable{ get; set; }

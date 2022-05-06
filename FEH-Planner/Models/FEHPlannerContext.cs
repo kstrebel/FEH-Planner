@@ -19,6 +19,16 @@ namespace FEH_Planner.Models
         //gets called when DB model is first created
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Slot>().HasData(
+                new Slot { SlotID=1, Name="Weapon"},
+                new Slot { SlotID=2, Name="Assist"},
+                new Slot { SlotID=3, Name="Special"},
+                new Slot { SlotID=4, Name="A Skill"},
+                new Slot { SlotID=5, Name="B Skill"},
+                new Slot { SlotID=6, Name="C Skill"},
+                new Slot { SlotID=7, Name="S Skill"}
+                );
+
             modelBuilder.Entity<Unit>().HasData(
                 new Unit { UnitID = 5, Name = "Marth", Epithet = "Altean Prince", Entry1 = "Mystery", MovementType = 'i', WeaponType = "Red Sword", Availability = 'r', LowestRarity = 3 },
                 new Unit { UnitID = 297, Name = "Tiki", Epithet = "Legendary Dragon", Entry1 = "Mystery", MovementType = 'a', WeaponType = "Blue Breath", Availability = 'l', LowestRarity = 5 },
@@ -29,13 +39,13 @@ namespace FEH_Planner.Models
                 );
 
             modelBuilder.Entity<Skill>().HasData(
-                new Skill { SkillID = 1, Name = "Distant Counter", Slot = 'a', SP = 300, Description = "Unit can counterattack regardless of foe's range.", Inheritable = true },
-                new Skill { SkillID = 2, Name = "Atk/Def Solo 4", Slot = 'a', SP = 300, Description = "If unit is not adjacent to an ally, grants Atk/Def+7.", Inheritable = true },
-                new Skill { SkillID = 3, Name = "R Duel Infantry 4", Slot = 'a', SP = 300, Description = "Grants HP+5, Atk/Spd/Def/Res+2. If unit is 5★, level 40, a Legendary Hero or a Mythic Hero, and unit's stats total less than 175, treats unit's stats as 175 in modes like Arena. If unit is 5★, level 40, not a Legendary Hero or Mythic Hero and unit's stats total less than 180, treats unit's stats as 180 in modes like Arena.", Inheritable = true },
-                new Skill { SkillID = 4, Name = "Desperation 3", Slot = 'b', SP = 300, Description = "If unit's HP ≤ 75% and unit initiates combat, unit can make a follow-up attack before foe can counterattack.", Inheritable = true },
-                new Skill { SkillID = 5, Name = "S Drink", Slot = 'b', SP = 300, Description = "At the start of turn 1, restores 99 HP and grants Special cooldown count-1.", Inheritable = false },
-                new Skill { SkillID = 6, Name = "Distant Guard", Slot = 'c', SP = 240, Description = "Allies within 2 spaces gain: \"If foe uses bow, dagger, magic, or staff, grants Def / Res + 4 during combat.\"", Inheritable = true },
-                new Skill { SkillID = 7, Name = "Silver Sword", Slot = 'w', SP = 300, Inheritable = true }
+                new Skill { SkillID = 1, Name = "Distant Counter", SlotID = 4, SP = 300, Description = "Unit can counterattack regardless of foe's range.", Inheritable = true },
+                new Skill { SkillID = 2, Name = "Atk/Def Solo 4", SlotID = 4, SP = 300, Description = "If unit is not adjacent to an ally, grants Atk/Def+7.", Inheritable = true },
+                new Skill { SkillID = 3, Name = "R Duel Infantry 4", SlotID = 4, SP = 300, Description = "Grants HP+5, Atk/Spd/Def/Res+2. If unit is 5★, level 40, a Legendary Hero or a Mythic Hero, and unit's stats total less than 175, treats unit's stats as 175 in modes like Arena. If unit is 5★, level 40, not a Legendary Hero or Mythic Hero and unit's stats total less than 180, treats unit's stats as 180 in modes like Arena.", Inheritable = true },
+                new Skill { SkillID = 4, Name = "Desperation 3", SlotID = 5, SP = 300, Description = "If unit's HP ≤ 75% and unit initiates combat, unit can make a follow-up attack before foe can counterattack.", Inheritable = true },
+                new Skill { SkillID = 5, Name = "S Drink", SlotID = 5, SP = 300, Description = "At the start of turn 1, restores 99 HP and grants Special cooldown count-1.", Inheritable = false },
+                new Skill { SkillID = 6, Name = "Distant Guard", SlotID = 6, SP = 240, Description = "Allies within 2 spaces gain: \"If foe uses bow, dagger, magic, or staff, grants Def / Res + 4 during combat.\"", Inheritable = true },
+                new Skill { SkillID = 7, Name = "Silver Sword", SlotID = 1, SP = 300, Inheritable = true }
                 );
 
             modelBuilder.Entity<Build>().HasData(

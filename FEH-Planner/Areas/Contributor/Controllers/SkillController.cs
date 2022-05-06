@@ -48,7 +48,8 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // GET: Contributor/Skill/Create
         public IActionResult Create()
         {
-            return View();
+            return View("Edit", new Skill());
+            //return View();
         }
 
         // POST: Contributor/Skill/Create
