@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FEH_Planner.Models.Unit>
+﻿@model IEnumerable<Unit>
 
 @{
     ViewData["Title"] = "Index";
@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Entry2)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MovementType)
+                @Html.DisplayNameFor(model => model.MoveType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.WeaponType)
@@ -58,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Entry2)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MovementType)
+                @Html.DisplayFor(modelItem => item.MoveType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WeaponType)

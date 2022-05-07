@@ -12,17 +12,22 @@ namespace FEH_Planner.Areas.Contributor.Controllers
     [Area("Contributor")]
     public class UnitController : Controller
     {
-        private FEHPlannerContext ctx;
+        private readonly FEHPlannerContext context;
 
-        public UnitController(FEHPlannerContext context)
+        public UnitController(FEHPlannerContext ctx)
         {
-            ctx = context;
+            context = ctx;
         }
 
         // GET: Contributor/Unit
         public async Task<IActionResult> Index()
         {
-            return View(await ctx.Units.ToListAsync());
+            var units = context.Units
+                .Include(u => u.MoveType).OrderBy(u => u.MoveTypeID)
+                .Include(u => u.WeaponType).OrderBy(u => u.WeaponTypeID);
+
+            return View(await units.ToListAsync());
+            //return View(await context.Units.ToListAsync());
         }
 
         // GET: Contributor/Unit/Details/5
@@ -33,8 +38,11 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var unit = await ctx.Units
-                .FirstOrDefaultAsync(m => m.UnitID == id);
+            var unit = await context.Units
+                .Include(u => u.MoveType)
+                .Include(u => u.WeaponType)
+                .FirstOrDefaultAsync(u => u.UnitID == id);
+
             if (unit == null)
             {
                 return NotFound();
@@ -46,24 +54,28 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // GET: Contributor/Unit/Create
         public IActionResult Create()
         {
-            return View();
+            ViewBag.Action = "Add";
+            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
+            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
+            return View("Edit", new Unit());
+            //return View();
         }
 
         // POST: Contributor/Unit/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UnitID,Name,Epithet,Entry1,Entry2,MovementType,WeaponType,SpecialType,Availability,LowestRarity")] Unit unit)
-        {
-            if (ModelState.IsValid)
-            {
-                ctx.Add(unit);
-                await ctx.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(unit);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("UnitID,Name,Epithet,Entry1,Entry2,MovementType,WeaponType,SpecialType,Availability,LowestRarity")] Unit unit)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        context.Add(unit);
+        //        await context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(unit);
+        //}
 
         // GET: Contributor/Unit/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -73,11 +85,16 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var unit = await ctx.Units.FindAsync(id);
+            var unit = await context.Units.FindAsync(id);
             if (unit == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Action = "Edit";
+            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
+            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
+
             return View(unit);
         }
 
@@ -86,19 +103,29 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UnitID,Name,Epithet,Entry1,Entry2,MovementType,WeaponType,SpecialType,Availability,LowestRarity")] Unit unit)
+        public async Task<IActionResult> Edit(Unit unit)
         {
-            if (id != unit.UnitID)
-            {
-                return NotFound();
-            }
+            //if (id != unit.UnitID)
+            //{
+            //    return NotFound();
+            //}
+
+            string action = (unit.UnitID == 0) ? "Add" : "Edit";
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    ctx.Update(unit);
-                    await ctx.SaveChangesAsync();
+                    if (action == "Add")
+                    {
+                        context.Units.Add(unit);
+                    }
+                    else
+                    {
+                        context.Update(unit);
+                    }
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Unit"); //go to units home
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -113,7 +140,13 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(unit);
+            else
+            {
+                ViewBag.Action = action;
+                ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
+                ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
+                return View(unit);
+            }
         }
 
         // GET: Contributor/Unit/Delete/5
@@ -124,7 +157,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var unit = await ctx.Units
+            var unit = await context.Units
                 .FirstOrDefaultAsync(m => m.UnitID == id);
             if (unit == null)
             {
@@ -139,15 +172,15 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var unit = await ctx.Units.FindAsync(id);
-            ctx.Units.Remove(unit);
-            await ctx.SaveChangesAsync();
+            var unit = await context.Units.FindAsync(id);
+            context.Units.Remove(unit);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UnitExists(int id)
         {
-            return ctx.Units.Any(e => e.UnitID == id);
+            return context.Units.Any(e => e.UnitID == id);
         }
     }
 }

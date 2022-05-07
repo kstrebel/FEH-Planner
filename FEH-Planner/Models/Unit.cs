@@ -20,8 +20,9 @@ namespace FEH_Planner.Models
         [InverseProperty("UnitMoveTypes")]
         public MoveType MoveType { get; set; }
 
+        [Range(1, 24, ErrorMessage ="Plese select a weapon type.")]
         public int WeaponTypeID { get; set; }
-        [ForeignKey("WeaponType")]
+        [ForeignKey("WeaponTypeID")]
         [InverseProperty("UnitWeaponTypes")]
         public WeaponType WeaponType { get; set; }
 

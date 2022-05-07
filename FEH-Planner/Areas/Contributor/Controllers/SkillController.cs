@@ -24,7 +24,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         {
             var skills = context.Skills
                 .Include(s => s.Slot).OrderBy(s => s.SlotID);
-            return View(skills);
+            return View(skills); //can this be async
             //return View(await context.Skills.ToListAsync());
         }
 
