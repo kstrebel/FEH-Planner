@@ -21,14 +21,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
 
         public IActionResult Index()
         {
-            var skills = context.Skills
-                .Include(s => s.Slot).OrderBy(s => s.Slot.Name)
-                .ToList();
-
-            //var units = context.Units
-                //.ToList();
-
-            return View(skills); //maps to /Areas/Contributor/Views/Home/Index.cshtml
+            return View(); //maps to /Areas/Contributor/Views/Home/Index.cshtml
         }
     }
 }

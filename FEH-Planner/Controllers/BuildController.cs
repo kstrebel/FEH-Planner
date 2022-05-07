@@ -26,7 +26,6 @@ namespace FEH_Planner.Controllers
                 .Include(b => b.C_Skill)
                 .Include(b => b.S_Skill)
                 .FirstOrDefault(b => b.BuildID == id);
-            //var weapon = context.Skills.Include(s => s.Name).FirstOrDefault(w => w.WeaponID == id);
             return View(build);
         }
 

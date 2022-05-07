@@ -16,7 +16,7 @@ namespace FEH_Planner.Models
         [Range(1, 7, ErrorMessage = "Please select a slot.")]
         public int SlotID { get; set; }
         [ForeignKey("SlotID")]
-        [InverseProperty("SkillSlot")]
+        [InverseProperty("SkillSlots")]
         public Slot Slot { get; set; }
 
         public int SP { get; set; }

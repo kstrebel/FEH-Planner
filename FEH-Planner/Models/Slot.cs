@@ -10,6 +10,6 @@ namespace FEH_Planner.Models
         public string Name { get; set; }
 
         //for foreign keys in Skill
-        public virtual ICollection<Skill> SkillSlot { get; set; }
+        public virtual ICollection<Skill> SkillSlots { get; set; }
     }
 }

@@ -22,9 +22,10 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // GET: Contributor/Skill
         public async Task<IActionResult> Index()
         {
-
-            //return View(skill);
-            return View(await context.Skills.ToListAsync());
+            var skills = context.Skills
+                .Include(s => s.Slot).OrderBy(s => s.SlotID);
+            return View(skills);
+            //return View(await context.Skills.ToListAsync());
         }
 
         // GET: Contributor/Skill/Details/5
@@ -36,7 +37,9 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             }
 
             var skill = await context.Skills
+                .Include(s => s.Slot)
                 .FirstOrDefaultAsync(m => m.SkillID == id);
+
             if (skill == null)
             {
                 return NotFound();
@@ -57,18 +60,18 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // POST: Contributor/Skill/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SkillID,Name,Slot,SP,Description,Inheritable")] Skill skill)
-        {
-            if (ModelState.IsValid)
-            {
-                context.Add(skill);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(skill);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("SkillID,Name,Slot,SP,Description,Inheritable")] Skill skill)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        context.Add(skill);
+        //        await context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(skill);
+        //}
 
         // GET: Contributor/Skill/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -95,14 +98,9 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SkillID,Name,Slot,SP,Description,Inheritable")] Skill skill)
+        public async Task<IActionResult> Edit(Skill skill)
         {
             string action = (skill.SkillID == 0) ? "Add" : "Edit";
-
-            //if (id != skill.SkillID)
-            //{
-            //    return NotFound();
-            //}
 
             if (ModelState.IsValid)
             {
@@ -165,6 +163,47 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var skill = await context.Skills.FindAsync(id);
+
+            //remove deleted skill from builds
+            IQueryable<Build> builds = null;
+            string propertyName = "";
+            switch (skill.SlotID)
+            {
+                case 1:
+                    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.Weapon == skill);
+                    propertyName = "Weapon";
+                    break;
+                //case 2:
+                //    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.Assist == skill);
+                //    propertyName = "Assist";
+                //    break;
+                //case 3:
+                //    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.Special == skill);
+                //    propertyName = "Special";
+                //    break;
+                case 4:
+                    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.A_Skill == skill);
+                    propertyName = "A_Skill";
+                    break;
+                case 5:
+                    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.B_Skill == skill);
+                    propertyName = "B_Skill";
+                    break;
+                case 6:
+                    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.C_Skill == skill);
+                    propertyName = "C_Skill";
+                    break;
+                case 7:
+                    builds = context.Builds.OrderBy(b => b.BuildID).Where(b => b.S_Skill == skill);
+                    propertyName = "S_Skill";
+                    break;
+            }
+
+            foreach (Build build in builds)
+            {
+                build.GetType().GetProperty(propertyName).SetValue(build, null);
+            }
+
             context.Skills.Remove(skill);
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
