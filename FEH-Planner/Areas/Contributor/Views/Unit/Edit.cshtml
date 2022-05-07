@@ -1,10 +1,11 @@
 ﻿@model Unit
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewBag.Title = $"{ViewBag.Action} Unit";
+    //ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>@ViewBag.Action</h1>
 
 <h4>Unit</h4>
 <hr />
@@ -34,7 +35,7 @@
                 <span asp-validation-for="Entry2" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MoveTypeID" class="control-label"></label>
+                <label asp-for="MoveTypeID" class="control-label">Movement Type</label>
                 <select asp-for="MoveTypeID" class="form-control">
                     <option value="0">Select a movement type</option>
                     @foreach (MoveType m in ViewBag.MoveTypes)
@@ -44,12 +45,19 @@
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="WeaponTypeID" class="control-label"></label>
+                <label asp-for="WeaponTypeID" class="control-label">Weapon Type</label>
                 <select asp-for="WeaponTypeID" class="form-control">
                     <option value="0">Select a weapon type</option>
                     @foreach (WeaponType w in ViewBag.WeaponTypes)
                     {
-                        <option value="@w.WeaponTypeID">@w.Color @w.Weapon</option>
+                        @if (w.WeaponTypeID <= 3)
+                        {
+                            <option value="@w.WeaponTypeID">@w.Weapon</option>
+                        }
+                        else
+                        {
+                            <option value="@w.WeaponTypeID">@w.Color @w.Weapon</option>
+                        }
                     }
                 </select>
             </div>

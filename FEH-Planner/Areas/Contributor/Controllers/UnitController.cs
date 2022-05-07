@@ -55,8 +55,8 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         public IActionResult Create()
         {
             ViewBag.Action = "Add";
-            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
-            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
+            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList();
+            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList();
             return View("Edit", new Unit());
             //return View();
         }
@@ -92,8 +92,8 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             }
 
             ViewBag.Action = "Edit";
-            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
-            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
+            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList();
+            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList();
 
             return View(unit);
         }
@@ -158,6 +158,8 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             }
 
             var unit = await context.Units
+                .Include(u => u.MoveType)
+                .Include(u => u.WeaponType)
                 .FirstOrDefaultAsync(m => m.UnitID == id);
             if (unit == null)
             {

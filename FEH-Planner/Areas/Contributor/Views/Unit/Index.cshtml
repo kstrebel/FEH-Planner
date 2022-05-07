@@ -58,10 +58,11 @@
                 @Html.DisplayFor(modelItem => item.Entry2)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MoveType)
+                @Html.DisplayFor(modelItem => item.MoveType.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WeaponType)
+                @Html.DisplayFor(modelItem => item.WeaponType.Color)
+                @Html.DisplayFor(modelItem => item.WeaponType.Weapon)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SpecialType)

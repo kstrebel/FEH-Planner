@@ -1,4 +1,4 @@
-﻿@model FEH_Planner.Models.Unit
+﻿@model Unit
 
 @{
     ViewData["Title"] = "Details";
@@ -44,9 +44,11 @@
             @Html.DisplayNameFor(model => model.WeaponType)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.WeaponType)
-            @*@Html.DisplayFor(model => model.WeaponType.Color)
-            @Html.DisplayFor(model => model.WeaponType.Weapon)*@
+            @if (Html.ViewData.Model.WeaponTypeID > 3)
+            {
+                @Html.DisplayFor(model => model.WeaponType.Color)
+            }
+            @Html.DisplayFor(model => model.WeaponType.Weapon)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SpecialType)
