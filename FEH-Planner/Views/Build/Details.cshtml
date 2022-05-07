@@ -36,6 +36,18 @@
         @((Model.S_SkillID == null) ? "" :Model.S_Skill.Name)
     </li>
     <li class="list-group-item">
+        <label>Total SP:</label>
+        @{
+            int total = 0;
+            if (Model.WeaponID != null) { total += Model.Weapon.SP; }
+            if (Model.A_SkillID != null) { total += Model.A_Skill.SP; }
+            if (Model.B_SkillID != null) { total += Model.B_Skill.SP; }
+            if (Model.C_SkillID != null) { total += Model.C_Skill.SP; }
+            if (Model.S_SkillID != null) { total += Model.S_Skill.SP; }
+            @total.ToString("0000");
+            }
+    </li>
+    <li class="list-group-item">
         <a asp-action="Edit" asp-controller="Build" asp-route-id="@Model.BuildID" class="btn btn-dark">Edit</a>
         <a asp-action="Delete" asp-controller="Build" asp-route-id="@Model.BuildID" class="btn btn-dark">Delete</a>
         <a asp-action="Index" asp-controller="Home" class="btn btn-dark">Home</a>
