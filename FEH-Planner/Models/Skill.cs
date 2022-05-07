@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; //for [ForeignKey]
 using System.Collections.Generic; //for ICollection
 
@@ -12,6 +13,7 @@ namespace FEH_Planner.Models
         public string Name { get; set; }
 
         //foreign key
+        [Range(1, 7, ErrorMessage = "Please select a slot.")]
         public int SlotID { get; set; }
         [ForeignKey("SlotID")]
         [InverseProperty("SkillSlot")]

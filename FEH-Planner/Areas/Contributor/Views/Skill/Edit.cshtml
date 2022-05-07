@@ -1,4 +1,4 @@
-﻿@model FEH_Planner.Models.Skill
+﻿@model Skill
 
 @{
     ViewData["Title"] = "Edit";
@@ -19,9 +19,14 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Slot" class="control-label"></label>
-                <input asp-for="Slot" class="form-control" />
-                <span asp-validation-for="Slot" class="text-danger"></span>
+                <label asp-for="Slot"></label>
+                <select asp-for="SlotID" class="form-control">
+                    <option value="0">Select a slot</option>
+                    @foreach (Slot sl in ViewBag.Slots)
+                    {
+                        <option value="@sl.SlotID">@sl.Name</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="SP" class="control-label"></label>

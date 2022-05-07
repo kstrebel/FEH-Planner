@@ -12,11 +12,11 @@ namespace FEH_Planner.Areas.Contributor.Controllers
     [Area("Contributor")]
     public class SkillController : Controller
     {
-        private readonly FEHPlannerContext ctx;
+        private readonly FEHPlannerContext context;
 
-        public SkillController(FEHPlannerContext context)
+        public SkillController(FEHPlannerContext ctx)
         {
-            ctx = context;
+            context = ctx;
         }
 
         // GET: Contributor/Skill
@@ -24,7 +24,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         {
 
             //return View(skill);
-            return View(await ctx.Skills.ToListAsync());
+            return View(await context.Skills.ToListAsync());
         }
 
         // GET: Contributor/Skill/Details/5
@@ -35,7 +35,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var skill = await ctx.Skills
+            var skill = await context.Skills
                 .FirstOrDefaultAsync(m => m.SkillID == id);
             if (skill == null)
             {
@@ -48,6 +48,8 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         // GET: Contributor/Skill/Create
         public IActionResult Create()
         {
+            ViewBag.Action = "Add";
+            ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
             return View("Edit", new Skill());
             //return View();
         }
@@ -61,8 +63,8 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         {
             if (ModelState.IsValid)
             {
-                ctx.Add(skill);
-                await ctx.SaveChangesAsync();
+                context.Add(skill);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(skill);
@@ -76,11 +78,15 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var skill = await ctx.Skills.FindAsync(id);
+            var skill = await context.Skills.FindAsync(id);
             if (skill == null)
             {
                 return NotFound();
             }
+
+            ViewBag.Action = "Edit";
+            ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
+
             return View(skill);
         }
 
@@ -91,17 +97,28 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SkillID,Name,Slot,SP,Description,Inheritable")] Skill skill)
         {
-            if (id != skill.SkillID)
-            {
-                return NotFound();
-            }
+            string action = (skill.SkillID == 0) ? "Add" : "Edit";
+
+            //if (id != skill.SkillID)
+            //{
+            //    return NotFound();
+            //}
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    ctx.Update(skill);
-                    await ctx.SaveChangesAsync();
+                    if (action == "Add")
+                    {
+                        context.Skills.Add(skill);
+                    }
+                    else
+                    {
+                        context.Update(skill);
+                    }
+
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Skill"); //go to skills home
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,7 +133,12 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(skill);
+            else
+            {
+                ViewBag.Action = action;
+                ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
+                return View(skill);
+            }
         }
 
         // GET: Contributor/Skill/Delete/5
@@ -127,7 +149,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var skill = await ctx.Skills
+            var skill = await context.Skills
                 .FirstOrDefaultAsync(m => m.SkillID == id);
             if (skill == null)
             {
@@ -142,15 +164,15 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var skill = await ctx.Skills.FindAsync(id);
-            ctx.Skills.Remove(skill);
-            await ctx.SaveChangesAsync();
+            var skill = await context.Skills.FindAsync(id);
+            context.Skills.Remove(skill);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SkillExists(int id)
         {
-            return ctx.Skills.Any(e => e.SkillID == id);
+            return context.Skills.Any(e => e.SkillID == id);
         }
     }
 }

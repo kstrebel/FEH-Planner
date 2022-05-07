@@ -63,13 +63,5 @@ namespace FEH_Planner.Models
         [InverseProperty("BuildS_Skills")]
         [ForeignKey("S_SkillID")]
         public Skill S_Skill { get; set; }
-
-        //public int Weapon { get; set; }
-        //public int Assist { get; set; }
-        //public int Special { get; set; }
-        //public int A_Skill { get; set; }
-        //public int B_Skill { get; set; }
-        //public int C_Skill { get; set; }
-        //public int S_Skill { get; set; }
     }
 }

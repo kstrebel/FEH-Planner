@@ -10,6 +10,8 @@ namespace FEH_Planner.Models
         {
         }
 
+        public DbSet<Slot> Slots { get; set; }
+
         public DbSet<Unit> Units { get; set; }
 
         public DbSet<Skill> Skills { get; set; }

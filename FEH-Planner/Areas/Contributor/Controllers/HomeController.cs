@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using FEH_Planner.Models;
 using Microsoft.EntityFrameworkCore;
+using FEH_Planner.Models;
 
 namespace FEH_Planner.Areas.Contributor.Controllers
 {
@@ -21,6 +22,7 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         public IActionResult Index()
         {
             var skills = context.Skills
+                .Include(s => s.Slot).OrderBy(s => s.Slot.Name)
                 .ToList();
 
             //var units = context.Units
