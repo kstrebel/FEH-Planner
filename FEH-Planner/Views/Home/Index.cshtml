@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Build>
+﻿@model BuildListViewModel
 
 @{
     ViewBag.Title = "Build Manager";
@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Build build in Model)
+        @foreach (Build build in Model.Builds)
         {
         <tr>
             <td><a asp-action="Details" asp-controller="Build" asp-route-id="@build.BuildID">@build.Name</a></td>

@@ -1,4 +1,4 @@
-﻿@model Build
+﻿@model BuildViewModel
 
 @{
     ViewBag.Title = $"{ ViewBag.Action} Build";
@@ -9,67 +9,67 @@
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="BuildID" />
+    <input type="hidden" asp-for="@Model.Build" />
 
     <div class="form-group">
-        <label asp-for="Name">Build Name</label>
-        <input asp-for="Name" class="form-control" />
+        <label asp-for="@Model.Build.Name">Build Name</label>
+        <input asp-for="@Model.Build.Name" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="UnitID">Unit</label>
-        <select asp-for="UnitID" class="form-control">
+        <label asp-for="@Model.Build.UnitID">Unit</label>
+        <select asp-for="@Model.Build.UnitID" class="form-control">
             <option value="0">Select a unit</option>
-            @foreach (Unit u in ViewBag.Units)
+            @foreach (Unit u in Model.Units)
             {
                 <option value="@u.UnitID">@u.Name</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="WeaponID">Weapon</label>
-        <select asp-for="WeaponID" class="form-control">
+        <label asp-for="@Model.Build.WeaponID">Weapon</label>
+        <select asp-for="@Model.Build.WeaponID" class="form-control">
             <option value="0">Select a weapon</option>
-            @foreach (Skill w in ViewBag.Weapons)
+            @foreach (Skill w in Model.Weapons)
             {
                 <option value="@w.SkillID">@w.Name</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="A_SkillID">A Skill</label>
-        <select asp-for="A_SkillID" class="form-control">
+        <label asp-for="@Model.Build.A_SkillID">A Skill</label>
+        <select asp-for="@Model.Build.A_SkillID" class="form-control">
             <option value="0">Select an A skill</option>
-            @foreach (Skill a in ViewBag.A_Skills)
+            @foreach (Skill a in Model.A_Skills)
             {
                 <option value="@a.SkillID">@a.Name</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="B_SkillID">B Skill</label>
-        <select asp-for="B_SkillID" class="form-control">
+        <label asp-for="@Model.Build.B_SkillID">B Skill</label>
+        <select asp-for="@Model.Build.B_SkillID" class="form-control">
             <option value="0">Select a B skill</option>
-            @foreach (Skill b in ViewBag.B_Skills)
+            @foreach (Skill b in Model.B_Skills)
             {
                 <option value="@b.SkillID">@b.Name</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="C_SkillID">C Skill</label>
-        <select asp-for="C_SkillID" class="form-control">
+        <label asp-for="@Model.Build.C_SkillID">C Skill</label>
+        <select asp-for="@Model.Build.C_SkillID" class="form-control">
             <option value="0">Select a C skill</option>
-            @foreach (Skill c in ViewBag.C_Skills)
+            @foreach (Skill c in Model.C_Skills)
             {
                 <option value="@c.SkillID">@c.Name</option>
             }
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="S_SkillID">S Skill</label>
-        <select asp-for="S_SkillID" class="form-control">
+        <label asp-for="@Model.Build.S_SkillID">S Skill</label>
+        <select asp-for="@Model.Build.S_SkillID" class="form-control">
             <option value="0">Select an S skill</option>
-            @foreach (Skill s in ViewBag.S_Skills)
+            @foreach (Skill s in Model.S_Skills)
             {
                 <option value="@s.SkillID">@s.Name</option>
             }
@@ -79,7 +79,7 @@
     <button type="submit" class="btn btn-dark">@ViewBag.Action</button>
 
     @if (ViewBag.Action == "Edit") {
-    <a asp-action="Details" asp-controller="Build" asp-route-id="@Model.BuildID" type="submit" class="btn btn-dark">Cancel</a>
+    <a asp-action="Details" asp-controller="Build" asp-route-id="@Model.Build.BuildID" type="submit" class="btn btn-dark">Cancel</a>
     }
     else
     {
