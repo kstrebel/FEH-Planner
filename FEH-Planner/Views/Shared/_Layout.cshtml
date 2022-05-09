@@ -34,6 +34,13 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData.Keys.Contains("alert") && TempData.Keys.Contains("alert class"))
+            {
+                <div class="alert alert-@TempData["alert class"]" role="alert">
+                    @TempData["alert"]
+                    @{ TempData.Remove("alert"); TempData.Remove("alert class");}
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

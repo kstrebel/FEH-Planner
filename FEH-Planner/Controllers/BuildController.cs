@@ -98,11 +98,15 @@ namespace FEH_Planner.Controllers
 
                 context.SaveChanges();
 
+                TempData["alert"] = $"{action}ed build \"{build.Name}\".";
+                TempData["alert class"] = "success";
                 return RedirectToAction("Details", new { ID = build.BuildID });
             }
             else
             {
                 //ViewBag.Action = action;
+                TempData["alert"] = $"There was a problem validating the build. Please try again.";
+                TempData["alert class"] = "danger";
                 return RedirectToAction("Edit", new { ID = build.BuildID });
             }
         }
@@ -120,14 +124,25 @@ namespace FEH_Planner.Controllers
                     .Include(b => b.S_Skill)
                     .FirstOrDefault(b => b.BuildID == id)
             };
+
+            //TempData["alert"] = $"Deleted build \"{model.Build.Name}\".";
+            //TempData["alert class"] = "success";
             return View(model);
         }
 
         [HttpPost]
         public IActionResult Delete(BuildViewModel model)
         {
+            string name = context.Builds
+                .AsNoTracking()
+                .FirstOrDefault(b => b.BuildID == model.Build.BuildID)
+                .Name;
+
             context.Builds.Remove(model.Build);
             context.SaveChanges();
+
+            TempData["alert"] = $"Deleted build \"{name}\".";
+            TempData["alert class"] = "success";
             return RedirectToAction("Index", "Home");
         }
     }
