@@ -1,4 +1,4 @@
-﻿@model Unit
+﻿@model UnitViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -10,67 +10,40 @@
     <h4>Unit</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Epithet)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Epithet)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Entry1)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Entry1)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Entry2)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Entry2)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoveType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoveType.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WeaponType)
-        </dt>
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.Unit.Name</dd>
+
+        <dt class="col-sm-2">Epithet</dt>
+        <dd class="col-sm-10">@Model.Unit.Epithet</dd>
+
+        <dt class="col-sm-2">Entry 1</dt>
+        <dd class="col-sm-10">@Model.Unit.Entry1</dd>
+
+        <dt class="col-sm-2">Entry 2</dt>
+        <dd class="col-sm-10">@Model.Unit.Entry2</dd>
+
+        <dt class="col-sm-2">Move Type</dt>
+        <dd class="col-sm-10">@Model.Unit.MoveType.Name</dd>
+
+        <dt class="col-sm-2">Weapon Type</dt>
         <dd class="col-sm-10">
-            @if (Html.ViewData.Model.WeaponTypeID > 3)
+            @if (Model.Unit.WeaponType.WeaponTypeID > 3)
             {
-                @Html.DisplayFor(model => model.WeaponType.Color)
+                @Model.Unit.WeaponType.Color
             }
-            @Html.DisplayFor(model => model.WeaponType.Weapon)
+            @Model.Unit.WeaponType.Weapon
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SpecialType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SpecialType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Availability)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LowestRarity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LowestRarity)
-        </dd>
+        <dt class="col-sm-2">Special Type</dt>
+        <dd class="col-sm-10">@Model.Unit.SpecialType</dd>
+
+        <dt class="col-sm-2">Availability</dt>
+        <dd class="col-sm-10">@Model.Unit.Availability</dd>
+
+        <dt class="col-sm-2">Lowest Rarity</dt>
+        <dd class="col-sm-10">@Model.Unit.LowestRarity</dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.UnitID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Unit.UnitID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

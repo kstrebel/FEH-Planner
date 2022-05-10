@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Contributor\Data\" />
-    <Folder Include="Areas\Contributor\Models\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

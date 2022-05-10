@@ -1,54 +1,54 @@
-﻿@model Unit
+﻿@model UnitViewModel
 
 @{
     ViewBag.Title = $"{ViewBag.Action} Unit";
     //ViewData["Title"] = "Edit";
 }
 
-<h1>@ViewBag.Action</h1>
+<h1>@ViewBag.Action Unit</h1>
 
 <h4>Unit</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UnitID" />
+            <input type="hidden" asp-for="@Model.Unit" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="@Model.Unit.Name" class="control-label"></label>
+                <input asp-for="@Model.Unit.Name" class="form-control" />
+                <span asp-validation-for="@Model.Unit.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Epithet" class="control-label"></label>
-                <input asp-for="Epithet" class="form-control" />
-                <span asp-validation-for="Epithet" class="text-danger"></span>
+                <label asp-for="@Model.Unit.Epithet" class="control-label"></label>
+                <input asp-for="@Model.Unit.Epithet" class="form-control" />
+                <span asp-validation-for="@Model.Unit.Epithet" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Entry1" class="control-label"></label>
-                <input asp-for="Entry1" class="form-control" />
-                <span asp-validation-for="Entry1" class="text-danger"></span>
+                <label asp-for="@Model.Unit.Entry1" class="control-label"></label>
+                <input asp-for="@Model.Unit.Entry1" class="form-control" />
+                <span asp-validation-for="@Model.Unit.Entry1" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Entry2" class="control-label"></label>
-                <input asp-for="Entry2" class="form-control" />
-                <span asp-validation-for="Entry2" class="text-danger"></span>
+                <label asp-for="@Model.Unit.Entry2" class="control-label"></label>
+                <input asp-for="@Model.Unit.Entry2" class="form-control" />
+                <span asp-validation-for="@Model.Unit.Entry2" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MoveTypeID" class="control-label">Movement Type</label>
-                <select asp-for="MoveTypeID" class="form-control">
+                <label asp-for="@Model.Unit.MoveTypeID" class="control-label">Movement Type</label>
+                <select asp-for="@Model.Unit.MoveTypeID" class="form-control">
                     <option value="0">Select a movement type</option>
-                    @foreach (MoveType m in ViewBag.MoveTypes)
+                    @foreach (MoveType m in Model.MoveTypes)
                     {
                         <option value="@m.MoveTypeID">@m.Name</option>
                     }
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="WeaponTypeID" class="control-label">Weapon Type</label>
-                <select asp-for="WeaponTypeID" class="form-control">
+                <label asp-for="@Model.Unit.WeaponTypeID" class="control-label">Weapon Type</label>
+                <select asp-for="@Model.Unit.WeaponTypeID" class="form-control">
                     <option value="0">Select a weapon type</option>
-                    @foreach (WeaponType w in ViewBag.WeaponTypes)
+                    @foreach (WeaponType w in Model.WeaponTypes)
                     {
                         @if (w.WeaponTypeID <= 3)
                         {
@@ -62,19 +62,19 @@
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="SpecialType" class="control-label"></label>
-                <input asp-for="SpecialType" class="form-control" />
-                <span asp-validation-for="SpecialType" class="text-danger"></span>
+                <label asp-for="@Model.Unit.SpecialType" class="control-label"></label>
+                <input asp-for="@Model.Unit.SpecialType" class="form-control" />
+                <span asp-validation-for="@Model.Unit.SpecialType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Availability" class="control-label"></label>
-                <input asp-for="Availability" class="form-control" />
-                <span asp-validation-for="Availability" class="text-danger"></span>
+                <label asp-for="@Model.Unit.Availability" class="control-label"></label>
+                <input asp-for="@Model.Unit.Availability" class="form-control" />
+                <span asp-validation-for="@Model.Unit.Availability" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LowestRarity" class="control-label"></label>
-                <input asp-for="LowestRarity" class="form-control" />
-                <span asp-validation-for="LowestRarity" class="text-danger"></span>
+                <label asp-for="@Model.Unit.LowestRarity" class="control-label"></label>
+                <input asp-for="@Model.Unit.LowestRarity" class="form-control" />
+                <span asp-validation-for="@Model.Unit.LowestRarity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

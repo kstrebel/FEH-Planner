@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FEH_Planner.Models;
+using FEH_Planner.Areas.Contributor.Models;
 
 namespace FEH_Planner.Areas.Contributor.Controllers
 {
@@ -20,28 +21,46 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         }
 
         // GET: Contributor/Unit
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var units = context.Units
+            //with viewmodel
+            var units = new UnitListViewModel
+            {
+                Units = context.Units
                 .Include(u => u.MoveType).OrderBy(u => u.MoveTypeID)
-                .Include(u => u.WeaponType).OrderBy(u => u.WeaponTypeID);
+                .Include(u => u.WeaponType).OrderBy(u => u.WeaponTypeID)
+                .ToList()
+            };
 
-            return View(await units.ToListAsync());
+            return View(units);
+
+            //var units = context.Units
+            //    .Include(u => u.MoveType).OrderBy(u => u.MoveTypeID)
+            //    .Include(u => u.WeaponType).OrderBy(u => u.WeaponTypeID);
+            //
+            //return View(await units.ToListAsync());
             //return View(await context.Units.ToListAsync());
         }
 
         // GET: Contributor/Unit/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await context.Units
+            var unit = new UnitViewModel
+            {
+                Unit = context.Units
                 .Include(u => u.MoveType)
                 .Include(u => u.WeaponType)
-                .FirstOrDefaultAsync(u => u.UnitID == id);
+                .FirstOrDefault(u => u.UnitID == id)
+            };
+            
+            //var unit = await context.Units
+            //    .Include(u => u.MoveType).OrderBy(u => u.MoveTypeID)
+            //    .Include(u => u.WeaponType).OrderBy(u => u.WeaponTypeID);
 
             if (unit == null)
             {
@@ -55,47 +74,50 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         public IActionResult Create()
         {
             ViewBag.Action = "Add";
-            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList();
-            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList();
-            return View("Edit", new Unit());
+
+            var model = new UnitViewModel
+            {
+                Unit = new Unit { UnitID = 0 },
+                MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList(),
+                WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList()
+            };
+
+            return View("Edit", model);
+
+            //ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList();
+            //ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList();
+            //return View("Edit", new Unit());
             //return View();
         }
 
-        // POST: Contributor/Unit/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("UnitID,Name,Epithet,Entry1,Entry2,MovementType,WeaponType,SpecialType,Availability,LowestRarity")] Unit unit)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.Add(unit);
-        //        await context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(unit);
-        //}
-
         // GET: Contributor/Unit/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
+            ViewBag.Action = "Edit";
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await context.Units.FindAsync(id);
-            if (unit == null)
+            var model = new UnitViewModel
+            {
+                Unit = context.Units.FirstOrDefault(u=>u.UnitID==id),
+                MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList(),
+                WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList()
+            };
+
+            //var unit = await context.Units.FindAsync(id);
+            
+            if (model == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Action = "Edit";
-            ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList();
-            ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList();
+            //ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList();
+            //ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList();
 
-            return View(unit);
+            return View(model);
         }
 
         // POST: Contributor/Unit/Edit/5
@@ -125,7 +147,10 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                         context.Update(unit);
                     }
                     await context.SaveChangesAsync();
-                    return RedirectToAction("Index", "Unit"); //go to units home
+
+                    TempData["alert"] = $"{action}ed unit \"{unit.Name}: {unit.Epithet}\".";
+                    TempData["alert class"] = "success";
+                    return RedirectToAction("Details", "Unit", new { ID = unit.UnitID });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,46 +163,76 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
             }
             else
             {
-                ViewBag.Action = action;
-                ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
-                ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
-                return View(unit);
+                TempData["alert"] = $"There was a problem validating the unit. Please try again.";
+                TempData["alert class"] = "danger";
+                return RedirectToAction("Edit", new { ID = unit.UnitID });
+
+                //ViewBag.Action = action;
+                //ViewBag.MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToListAsync();
+                //ViewBag.WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToListAsync();
+                //return View(unit);
             }
         }
 
         // GET: Contributor/Unit/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var unit = await context.Units
-                .Include(u => u.MoveType)
-                .Include(u => u.WeaponType)
-                .FirstOrDefaultAsync(m => m.UnitID == id);
-            if (unit == null)
+            var model= new UnitViewModel
+            {
+                Unit = context.Units
+                .Include(u=>u.MoveType)
+                .Include(u=>u.WeaponType)
+                .FirstOrDefault(u => u.UnitID == id)
+            };
+
+            //var unit = await context.Units
+            //    .Include(u => u.MoveType)
+            //    .Include(u => u.WeaponType)
+            //    .FirstOrDefaultAsync(m => m.UnitID == id);
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(unit);
+            return View(model);
         }
 
         // POST: Contributor/Unit/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(UnitViewModel model)
         {
-            var unit = await context.Units.FindAsync(id);
-            context.Units.Remove(unit);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            string name = context.Units
+                .AsNoTracking()
+                .FirstOrDefault(u => u.UnitID == model.Unit.UnitID)
+                .Name
+                + ": " +
+                context.Units
+                .AsNoTracking()
+                .FirstOrDefault(u => u.UnitID == model.Unit.UnitID)
+                .Epithet;
+
+            context.Units.Remove(model.Unit);
+            context.SaveChanges();
+
+            TempData["alert"] = $"Deleted unit \"{name}\".";
+            TempData["alert class"] = "success";
+            return RedirectToAction("Index", "Unit");
+
+            //var unit = await context.Units.FindAsync(id);
+            //context.Units.Remove(unit);
+            //await context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
         }
 
         private bool UnitExists(int id)
