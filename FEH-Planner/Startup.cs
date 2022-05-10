@@ -27,7 +27,14 @@ namespace FEH_Planner
                 options.AppendTrailingSlash = true;
             });
 
-            services.AddControllersWithViews();
+            services.AddMemoryCache();
+            services.AddSession();
+
+            //check if newtonsoft needed in .NET 5 with system.text.json
+            services.AddControllersWithViews().AddNewtonsoftJson(options=>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
             services.AddDbContext<FEHPlannerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FEHPlannerContext"))); //from appsettings.json
         }
@@ -51,6 +58,8 @@ namespace FEH_Planner
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -30,6 +30,12 @@ namespace FEH_Planner.Controllers
                     .FirstOrDefault(b => b.BuildID == id)
             };
 
+            var session = new UserSession(HttpContext.Session);
+            session.AddRecentPage(model.Build);
+            //var recents = session.GetMyRecentPages();
+            //recents.Add(model.Build);
+            //session.SetMyRecentPages(recents);
+
             return View(model);
         }
 
@@ -140,6 +146,9 @@ namespace FEH_Planner.Controllers
 
             context.Builds.Remove(model.Build);
             context.SaveChanges();
+
+            var session = new UserSession(HttpContext.Session);
+            session.RemoveRecentPage(model.Build);
 
             TempData["alert"] = $"Deleted build \"{name}\".";
             TempData["alert class"] = "success";

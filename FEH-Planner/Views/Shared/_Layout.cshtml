@@ -34,6 +34,28 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <div class="list-group">
+                @{
+                    var session = new UserSession(Context.Session);
+                    var recents = session.GetMyRecentPages();
+
+                    int count = recents.Count;
+                    if (count > 0)
+                    {
+                        <h3>Recent Pages</h3>
+
+                        int i = 0;
+                        if (ViewBag.Action == "Details") { i = 1; }
+
+                        while (i < 3 && i < count)
+                        {
+                            var build = recents[i];
+                            <a class="list-group-item" asp-action="Details" asp-controller="Build" asp-route-id="@build.BuildID">@build.Name - @build.Unit.Name</a>
+                            ++i;
+                        }
+                    }
+                }
+            </div>
             @if (TempData.Keys.Contains("alert") && TempData.Keys.Contains("alert class"))
             {
                 <div class="alert alert-@TempData["alert class"]" role="alert">

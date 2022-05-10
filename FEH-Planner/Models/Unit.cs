@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; //for [ForeignKey]
 using System.Collections.Generic; //for ICollection
+using Newtonsoft.Json; //to ignore when building session JSON
 
 namespace FEH_Planner.Models
 {
@@ -31,6 +32,7 @@ namespace FEH_Planner.Models
         public int LowestRarity { get; set; }
 
         //for foreign key in build
+        [JsonIgnore]
         public virtual ICollection<Build> BuildUnits { get; set; }
     }
 }
