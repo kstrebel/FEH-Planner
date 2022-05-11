@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Skill>
+﻿@model SkillListViewModel
 
 @{
     ViewBag.Title = "Skill Manager";
@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Skill skill in Model)
+        @foreach (Skill skill in Model.Skills)
         {
             <tr>
                 <td>@skill.Name</td>

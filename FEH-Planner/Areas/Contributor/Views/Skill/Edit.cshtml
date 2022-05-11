@@ -1,10 +1,10 @@
-﻿@model Skill
+﻿@model SkillViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>@ViewBag.Action</h1>
+<h1>@ViewBag.Action Skill</h1>
 
 <h4>Skill</h4>
 <hr />
@@ -12,35 +12,35 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SkillID" />
+            <input type="hidden" asp-for="@Model.Skill.SkillID" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="@Model.Skill.Name" class="control-label"></label>
+                <input asp-for="@Model.Skill.Name" class="form-control" />
+                <span asp-validation-for="@Model.Skill.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Slot"></label>
-                <select asp-for="SlotID" class="form-control">
+                <label asp-for="@Model.Skill.Slot"></label>
+                <select asp-for="@Model.Skill.SlotID" class="form-control">
                     <option value="0">Select a slot</option>
-                    @foreach (Slot sl in ViewBag.Slots)
+                    @foreach (Slot sl in Model.Slots)
                     {
                         <option value="@sl.SlotID">@sl.Name</option>
                     }
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="SP" class="control-label"></label>
-                <input asp-for="SP" class="form-control" />
-                <span asp-validation-for="SP" class="text-danger"></span>
+                <label asp-for="@Model.Skill.SP" class="control-label"></label>
+                <input asp-for="@Model.Skill.SP" class="form-control" />
+                <span asp-validation-for="@Model.Skill.SP" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="@Model.Skill.Description" class="control-label"></label>
+                <input asp-for="@Model.Skill.Description" class="form-control" />
+                <span asp-validation-for="@Model.Skill.Description" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Inheritable" /> @Html.DisplayNameFor(model => model.Inheritable)
+                    <input class="form-check-input" asp-for="@Model.Skill.Inheritable" /> @Html.DisplayNameFor(model => model.Skill.Inheritable)
                 </label>
             </div>
             <div class="form-group">

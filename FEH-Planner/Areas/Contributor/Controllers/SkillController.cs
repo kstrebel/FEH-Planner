@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FEH_Planner.Models;
+using FEH_Planner.Areas.Contributor.Models;
 
 namespace FEH_Planner.Areas.Contributor.Controllers
 {
@@ -20,25 +21,41 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         }
 
         // GET: Contributor/Skill
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var skills = context.Skills
-                .Include(s => s.Slot).OrderBy(s => s.SlotID);
-            return View(skills); //can this be async
+            var skills = new SkillListViewModel
+            {
+                Skills = context.Skills
+                .Include(s => s.Slot).OrderBy(s => s.SlotID)
+                .ToList()
+            };
+
+            return View(skills);
+
+            //var skills = context.Skills
+            //    .Include(s => s.Slot).OrderBy(s => s.SlotID);
+            //return View(skills); //can this be async
             //return View(await context.Skills.ToListAsync());
         }
 
         // GET: Contributor/Skill/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var skill = await context.Skills
+            var skill = new SkillViewModel
+            {
+                Skill = context.Skills
                 .Include(s => s.Slot)
-                .FirstOrDefaultAsync(m => m.SkillID == id);
+                .FirstOrDefault(s => s.SkillID == id)
+            };
+
+            //var skill = await context.Skills
+            //    .Include(s => s.Slot)
+            //    .FirstOrDefaultAsync(m => m.SkillID == id);
 
             if (skill == null)
             {
@@ -52,45 +69,46 @@ namespace FEH_Planner.Areas.Contributor.Controllers
         public IActionResult Create()
         {
             ViewBag.Action = "Add";
-            ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
-            return View("Edit", new Skill());
+
+            var model = new SkillViewModel
+            {
+                Skill = new Skill { SkillID = 0 },
+                Slots = context.Slots.OrderBy(s => s.SlotID).ToList()
+            };
+
+            return View("Edit", model);
+
+            //ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
+            //return View("Edit", new Skill());
             //return View();
         }
 
-        // POST: Contributor/Skill/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("SkillID,Name,Slot,SP,Description,Inheritable")] Skill skill)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.Add(skill);
-        //        await context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(skill);
-        //}
-
         // GET: Contributor/Skill/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
+            ViewBag.Action = "Edit";
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var skill = await context.Skills.FindAsync(id);
-            if (skill == null)
+            var model = new SkillViewModel
+            {
+                Skill = context.Skills.FirstOrDefault(s => s.SkillID == id),
+                Slots = context.Slots.OrderBy(s => s.SlotID).ToList()
+            };
+
+            //var skill = await context.Skills.FindAsync(id);
+            
+            if (model == null)
             {
                 return NotFound();
             }
 
-            ViewBag.Action = "Edit";
-            ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
+            //ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
 
-            return View(skill);
+            return View(model);
         }
 
         // POST: Contributor/Skill/Edit/5
@@ -116,7 +134,10 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                     }
 
                     await context.SaveChangesAsync();
-                    return RedirectToAction("Index", "Skill"); //go to skills home
+
+                    TempData["alert"] = $"{action}ed skill \"{skill.Name}\".";
+                    TempData["alert class"] = "success";
+                    return RedirectToAction("Details", "Skill", new { ID = skill.SkillID }); //go to skills home
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,13 +150,17 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
             }
             else
             {
-                ViewBag.Action = action;
-                ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
-                return View(skill);
+                TempData["alert"] = $"There was a problem validating the skill. Please try again.";
+                TempData["alert class"] = "danger";
+                return RedirectToAction("Edit", new { ID = skill.SkillID });
+
+                //ViewBag.Action = action;
+                //ViewBag.Slots = context.Slots.OrderBy(s => s.SlotID).ToList();
+                //return View(skill);
             }
         }
 
@@ -147,22 +172,31 @@ namespace FEH_Planner.Areas.Contributor.Controllers
                 return NotFound();
             }
 
-            var skill = await context.Skills
-                .FirstOrDefaultAsync(m => m.SkillID == id);
-            if (skill == null)
+            var model = new SkillViewModel
+            {
+                Skill = context.Skills
+                .Include(s => s.Slot)
+                .FirstOrDefault(s => s.SkillID == id)
+            };
+
+            //var skill = await context.Skills
+            //    .FirstOrDefaultAsync(m => m.SkillID == id);
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(skill);
+            return View(model);
         }
 
         // POST: Contributor/Skill/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(SkillViewModel model)
         {
-            var skill = await context.Skills.FindAsync(id);
+            var skill = await context.Skills.FindAsync(model.Skill.SkillID);
+            string name = model.Skill.Name;
 
             //remove deleted skill from builds
             IQueryable<Build> builds = null;
@@ -206,7 +240,12 @@ namespace FEH_Planner.Areas.Contributor.Controllers
 
             context.Skills.Remove(skill);
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            TempData["alert"] = $"Deleted skill \"{name}\".";
+            TempData["alert class"] = "success";
+            return RedirectToAction("Index", "Skill");
+
+            //return RedirectToAction(nameof(Index));
         }
 
         private bool SkillExists(int id)
