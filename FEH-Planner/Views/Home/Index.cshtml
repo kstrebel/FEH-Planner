@@ -1,4 +1,4 @@
-﻿@model BuildListViewModel
+@model BuildListViewModel
 
 @{
     ViewBag.Title = "Build Manager";
@@ -6,6 +6,9 @@
 
 <a asp-action="Add" asp-controller="Build" class="ml-2">Add Build</a>
 <table class="table mt-2">
+
+<h1>All Builds</h1>
+<table  id="sortTable" class="table table-hover table-sm">
     <thead>
         <tr>
             <th>Build Name</th>
