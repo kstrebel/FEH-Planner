@@ -8,50 +8,63 @@
 
 <h4>Skill</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@Model.Skill.SkillID" />
-            <div class="form-group">
-                <label asp-for="@Model.Skill.Name" class="control-label"></label>
-                <input asp-for="@Model.Skill.Name" class="form-control" />
-                <span asp-validation-for="@Model.Skill.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Skill.Slot"></label>
-                <select asp-for="@Model.Skill.SlotID" class="form-control">
-                    <option value="0">Select a slot</option>
-                    @foreach (Slot sl in Model.Slots)
-                    {
-                        <option value="@sl.SlotID">@sl.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Skill.SP" class="control-label"></label>
-                <input asp-for="@Model.Skill.SP" class="form-control" />
-                <span asp-validation-for="@Model.Skill.SP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Skill.Description" class="control-label"></label>
-                <input asp-for="@Model.Skill.Description" class="form-control" />
-                <span asp-validation-for="@Model.Skill.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.Skill.SkillID" />
+    <div class="form-group row">
+        <label asp-for="@Model.Skill.Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Skill.Name" class="form-control" />
+            <span asp-validation-for="@Model.Skill.Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Skill.Slot" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="@Model.Skill.SlotID" class="form-control">
+                <option value="0">Select a slot</option>
+                @foreach (Slot sl in Model.Slots)
+                {
+                    <option value="@sl.SlotID">@sl.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Skill.SP" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Skill.SP" class="form-control" />
+            <span asp-validation-for="@Model.Skill.SP" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Skill.Description" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Skill.Description" class="form-control" />
+            <span asp-validation-for="@Model.Skill.Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <div class="form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="@Model.Skill.Inheritable" /> @Html.DisplayNameFor(model => model.Skill.Inheritable)
                 </label>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="form-group row">
+    <div class="col-sm-10">
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {

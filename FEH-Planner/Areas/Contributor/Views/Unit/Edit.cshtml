@@ -9,82 +9,100 @@
 
 <h4>Unit</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@Model.Unit.UnitID" />
-            <div class="form-group">
-                <label asp-for="@Model.Unit.Name" class="control-label"></label>
-                <input asp-for="@Model.Unit.Name" class="form-control" />
-                <span asp-validation-for="@Model.Unit.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.Epithet" class="control-label"></label>
-                <input asp-for="@Model.Unit.Epithet" class="form-control" />
-                <span asp-validation-for="@Model.Unit.Epithet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.Entry1" class="control-label"></label>
-                <input asp-for="@Model.Unit.Entry1" class="form-control" />
-                <span asp-validation-for="@Model.Unit.Entry1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.Entry2" class="control-label"></label>
-                <input asp-for="@Model.Unit.Entry2" class="form-control" />
-                <span asp-validation-for="@Model.Unit.Entry2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.MoveTypeID" class="control-label">Movement Type</label>
-                <select asp-for="@Model.Unit.MoveTypeID" class="form-control">
-                    <option value="0">Select a movement type</option>
-                    @foreach (MoveType m in Model.MoveTypes)
-                    {
-                        <option value="@m.MoveTypeID">@m.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.WeaponTypeID" class="control-label">Weapon Type</label>
-                <select asp-for="@Model.Unit.WeaponTypeID" class="form-control">
-                    <option value="0">Select a weapon type</option>
-                    @foreach (WeaponType w in Model.WeaponTypes)
-                    {
-                        @if (w.WeaponTypeID <= 3)
-                        {
-                            <option value="@w.WeaponTypeID">@w.Weapon</option>
-                        }
-                        else
-                        {
-                            <option value="@w.WeaponTypeID">@w.Color @w.Weapon</option>
-                        }
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.SpecialType" class="control-label"></label>
-                <input asp-for="@Model.Unit.SpecialType" class="form-control" />
-                <span asp-validation-for="@Model.Unit.SpecialType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.Availability" class="control-label"></label>
-                <input asp-for="@Model.Unit.Availability" class="form-control" />
-                <span asp-validation-for="@Model.Unit.Availability" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Unit.LowestRarity" class="control-label"></label>
-                <input asp-for="@Model.Unit.LowestRarity" class="form-control" />
-                <span asp-validation-for="@Model.Unit.LowestRarity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.Unit.UnitID" />
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.Name" class="form-control" />
+            <span asp-validation-for="@Model.Unit.Name" class="text-danger"></span>
+        </div>
     </div>
-</div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.Epithet" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.Epithet" class="form-control" />
+            <span asp-validation-for="@Model.Unit.Epithet" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.Entry1" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.Entry1" class="form-control" />
+            <span asp-validation-for="@Model.Unit.Entry1" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.Entry2" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.Entry2" class="form-control" />
+            <span asp-validation-for="@Model.Unit.Entry2" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.MoveTypeID" class="col-sm-2 col-form-label">Movement Type</label>
+        <div class="col-sm-10">
+            <select asp-for="@Model.Unit.MoveTypeID" class="form-control">
+                <option value="0">Select a movement type</option>
+                @foreach (MoveType m in Model.MoveTypes)
+                {
+                    <option value="@m.MoveTypeID">@m.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.WeaponTypeID" class="col-sm-2 col-form-label">Weapon Type</label>
+        <div class="col-sm-10">
+            <select asp-for="@Model.Unit.WeaponTypeID" class="form-control">
+                <option value="0">Select a weapon type</option>
+                @foreach (WeaponType w in Model.WeaponTypes)
+                {
+                    @if (w.WeaponTypeID <= 3)
+                    {
+                        <option value="@w.WeaponTypeID">@w.Weapon</option>
+                    }
+                    else
+                    {
+                        <option value="@w.WeaponTypeID">@w.Color @w.Weapon</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.SpecialType" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.SpecialType" class="form-control" />
+            <span asp-validation-for="@Model.Unit.SpecialType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.Availability" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.Availability" class="form-control" />
+            <span asp-validation-for="@Model.Unit.Availability" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="@Model.Unit.LowestRarity" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Unit.LowestRarity" class="form-control" />
+            <span asp-validation-for="@Model.Unit.LowestRarity" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="form-group row">
+    <div class="col-sm-10">
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {
