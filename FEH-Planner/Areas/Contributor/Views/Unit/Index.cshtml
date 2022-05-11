@@ -7,42 +7,45 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New Unit</a>
+    <a asp-action="Create" class="btn btn-primary">Create New Unit</a>
 </p>
-<table id="sortTable" class="table table-hover table-sm">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Epithet</th>
-            <th>Entry 1</th>
-            <th>Entry 2</th>
-            <th>Move Type</th>
-            <th>Weapon Type</th>
-            <th>Special Type</th>
-            <th>Availability</th>
-            <th>Lowest Rarity</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Unit unit in Model.Units)
-        {
+
+<div class="mt-4">
+    <table id="sortTable" class="table table-hover table-sm">
+        <thead>
             <tr>
-                <td>@unit.Name</td>
-                <td>@unit.Epithet</td>
-                <td>@unit.Entry1</td>
-                <td>@((unit.Entry2==null) ? "": unit.Entry2)</td>
-                <td>@unit.MoveType.Name</td>
-                <td>@unit.WeaponType.Color @unit.WeaponType.Weapon</td>
-                <td>@((unit.SpecialType==null)?"":unit.SpecialType)</td>
-                <td>@unit.Availability</td>
-                <td>@unit.LowestRarity</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@unit.UnitID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@unit.UnitID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@unit.UnitID">Delete</a>
-                </td>
+                <th>Name</th>
+                <th>Epithet</th>
+                <th>Entry 1</th>
+                <th>Entry 2</th>
+                <th>Move Type</th>
+                <th>Weapon Type</th>
+                <th>Special Type</th>
+                <th>Availability</th>
+                <th>Lowest Rarity</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (Unit unit in Model.Units)
+            {
+                <tr>
+                    <td>@unit.Name</td>
+                    <td>@unit.Epithet</td>
+                    <td>@unit.Entry1</td>
+                    <td>@((unit.Entry2==null) ? "": unit.Entry2)</td>
+                    <td>@unit.MoveType.Name</td>
+                    <td>@unit.WeaponType.Color @unit.WeaponType.Weapon</td>
+                    <td>@((unit.SpecialType==null)?"":unit.SpecialType)</td>
+                    <td>@unit.Availability</td>
+                    <td>@unit.LowestRarity</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@unit.UnitID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@unit.UnitID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@unit.UnitID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

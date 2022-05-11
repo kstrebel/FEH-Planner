@@ -4,34 +4,36 @@
     ViewBag.Title = "Build Manager";
 }
 
-<a asp-action="Add" asp-controller="Build" class="ml-2">Add Build</a>
-<table class="table mt-2">
-
 <h1>All Builds</h1>
-<table  id="sortTable" class="table table-hover table-sm">
-    <thead>
-        <tr>
-            <th>Build Name</th>
-            <th>Unit</th>
-            <th>Weapon</th>
-            <th>A Skill</th>
-            <th>B Skill</th>
-            <th>C Skill</th>
-            <th>S Skill</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Build build in Model.Builds)
-        {
-        <tr>
-            <td><a asp-action="Details" asp-controller="Build" asp-route-id="@build.BuildID">@build.Name</a></td>
-            <td>@build.Unit.Name</td>
-            <td>@((build.WeaponID == null) ? "" : build.Weapon.Name)</td>
-            <td>@((build.A_SkillID == null) ? "" : build.A_Skill.Name)</td>
-            <td>@((build.B_SkillID == null) ? "" : build.B_Skill.Name)</td>
-            <td>@((build.C_SkillID == null) ? "" : build.C_Skill.Name)</td>
-            <td>@((build.S_SkillID == null) ? "" : build.S_Skill.Name)</td>
-        </tr>
-        }
-    </tbody>
-</table>
+
+<a asp-action="Add" asp-controller="Build" class="btn btn-primary">Create New Build</a>
+
+<div class="mt-4">
+    <table id="sortTable" class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Build Name</th>
+                <th>Unit</th>
+                <th>Weapon</th>
+                <th>A Skill</th>
+                <th>B Skill</th>
+                <th>C Skill</th>
+                <th>S Skill</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Build build in Model.Builds)
+            {
+                <tr>
+                    <td><a asp-action="Details" asp-controller="Build" asp-route-id="@build.BuildID">@build.Name</a></td>
+                    <td>@build.Unit.Name</td>
+                    <td>@((build.WeaponID == null) ? "" : build.Weapon.Name)</td>
+                    <td>@((build.A_SkillID == null) ? "" : build.A_Skill.Name)</td>
+                    <td>@((build.B_SkillID == null) ? "" : build.B_Skill.Name)</td>
+                    <td>@((build.C_SkillID == null) ? "" : build.C_Skill.Name)</td>
+                    <td>@((build.S_SkillID == null) ? "" : build.S_Skill.Name)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

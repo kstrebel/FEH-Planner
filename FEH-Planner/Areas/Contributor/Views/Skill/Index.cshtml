@@ -7,34 +7,37 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" asp-controller="Skill" class="ml-2">Add Skill</a>
+    <a asp-action="Create" asp-controller="Skill" class="btn btn-primary">Add Skill</a>
 </p>
-<table id="sortTable" class="table table-hover table-sm">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Slot</th>
-            <th>SP</th>
-            <th>Description</th>
-            <th>Inheritable?</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Skill skill in Model.Skills)
-        {
+
+<div class="mt-4">
+    <table id="sortTable" class="table table-hover table-sm">
+        <thead>
             <tr>
-                <td>@skill.Name</td>
-                <td>@skill.Slot.Name</td>
-                <td>@skill.SP</td>
-                <td>@skill.Description</td>
-                <td>@Html.DisplayFor(modelItem => @skill.Inheritable)</td>
-                <td>
-                    <a asp-action="Edit" asp-controller="Skill" asp-route-id="@skill.SkillID">Edit</a>
-                    <a asp-action="Details" asp-controller="Skill" asp-route-id="@skill.SkillID">Details</a> |
-                    <a asp-action="Delete" asp-controller="Skill" asp-route-id="@skill.SkillID">Delete</a>
-                </td>
+                <th>Name</th>
+                <th>Slot</th>
+                <th>SP</th>
+                <th>Description</th>
+                <th>Inheritable?</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (Skill skill in Model.Skills)
+            {
+                <tr>
+                    <td>@skill.Name</td>
+                    <td>@skill.Slot.Name</td>
+                    <td>@skill.SP</td>
+                    <td>@skill.Description</td>
+                    <td>@Html.DisplayFor(modelItem => @skill.Inheritable)</td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Skill" asp-route-id="@skill.SkillID">Edit</a>
+                        <a asp-action="Details" asp-controller="Skill" asp-route-id="@skill.SkillID">Details</a> |
+                        <a asp-action="Delete" asp-controller="Skill" asp-route-id="@skill.SkillID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
