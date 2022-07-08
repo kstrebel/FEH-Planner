@@ -3,16 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FEH_Planner.Models
 {
-    public class FEHPlannerContext:DbContext
+    public class FEHPlannerContext : DbContext
     {
         //override base constuctor and pass in any options
         public FEHPlannerContext(DbContextOptions<FEHPlannerContext> options) : base(options)
         {
         }
 
+        public DbSet<Entry> Entries { get; set; }
         public DbSet<MoveType> MoveTypes { get; set; }
-
         public DbSet<WeaponType> WeaponTypes { get; set; }
+        public DbSet<SpecialType> SpecialTypes { get; set; }
+        public DbSet<Availability> Availabilities { get; set; }
 
         public DbSet<Unit> Units { get; set; }
 
@@ -25,6 +27,23 @@ namespace FEH_Planner.Models
         //gets called when DB model is first created
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Entry>().HasData(
+                new Entry { EntryID = 1, Name = "Heroes" },
+                new Entry { EntryID = 2, Name = "Mystery/Shadow Dragon" },
+                new Entry { EntryID = 3, Name = "Valentia" },
+                new Entry { EntryID = 4, Name = "Geneology" },
+                new Entry { EntryID = 5, Name = "Thracia 776" },
+                new Entry { EntryID = 6, Name = "Binding Blade" },
+                new Entry { EntryID = 7, Name = "Blazing Blade" },
+                new Entry { EntryID = 8, Name = "Sacred Stones" },
+                new Entry { EntryID = 9, Name = "Path of Radiance" },
+                new Entry { EntryID = 10, Name = "Radiant Dawn" },
+                new Entry { EntryID = 12, Name = "Awakening" },
+                new Entry { EntryID = 13, Name = "Fates" },
+                new Entry { EntryID = 14, Name = "Three Houses" },
+                new Entry { EntryID = 15, Name = "Tokyo Mirage Sessions" }
+                );
+
             modelBuilder.Entity<MoveType>().HasData(
                 new MoveType { MoveTypeID = 1, Name = "Infantry" },
                 new MoveType { MoveTypeID = 2, Name = "Armored" },
@@ -59,13 +78,25 @@ namespace FEH_Planner.Models
                 new WeaponType { WeaponTypeID = 24, Color = "Colorless", Weapon = "Staff" }
                 );
 
+            modelBuilder.Entity<SpecialType>().HasData(
+                new SpecialType { SpecialTypeID = 1, Name = "Duo" },
+                new SpecialType { SpecialTypeID = 2, Name = "Harmonic" }
+                );
+
+            modelBuilder.Entity<Availability>().HasData(
+                new Availability { AvailabilityID = 1, Name = "Regular" },
+                new Availability { AvailabilityID = 2, Name = "Grail" },
+                new Availability { AvailabilityID = 3, Name = "Seasonal" },
+                new Availability { AvailabilityID = 4, Name = "Legendary/Mythic" }
+                );
+
             modelBuilder.Entity<Unit>().HasData(
-                new Unit { UnitID = 5, Name = "Marth", Epithet = "Altean Prince", Entry1 = "Mystery", MoveTypeID = 1, WeaponTypeID = 1, Availability = 'r', LowestRarity = 3 },
-                new Unit { UnitID = 297, Name = "Tiki", Epithet = "Legendary Dragon", Entry1 = "Mystery", MoveTypeID = 2, WeaponTypeID = 17, Availability = 'l', LowestRarity = 5 },
-                new Unit { UnitID = 246, Name = "Ares", Epithet = "Black Knight", Entry1 = "Geneology", MoveTypeID = 3, WeaponTypeID = 1, Availability = 'r', LowestRarity = 3 },
-                new Unit { UnitID = 701, Name = "Leif", Epithet = "Destined Scions", Entry1 = "Geneology", Entry2 = "Thracia", MoveTypeID = 3, WeaponTypeID = 11, SpecialType = 'h', Availability = 's', LowestRarity = 5 },
-                new Unit { UnitID = 520, Name = "Micaiah", Epithet = "Dawn Wind's Duo", Entry1 = "Dawn", MoveTypeID = 4, WeaponTypeID = 7, SpecialType = 'd', Availability = 's', LowestRarity = 5 },
-                new Unit { UnitID = 586, Name = "Hana", Epithet = "Focused Ninja", Entry1 = "Fates", MoveTypeID = 1, WeaponTypeID = 3, Availability = 'g', LowestRarity = 4 }
+                new Unit { UnitID = 5, Name = "Marth", Epithet = "Altean Prince", Entry1ID = 2, MoveTypeID = 1, WeaponTypeID = 1, AvailabilityID = 1, LowestRarity = 3 },
+                new Unit { UnitID = 297, Name = "Tiki", Epithet = "Legendary Dragon", Entry1ID = 2, MoveTypeID = 2, WeaponTypeID = 17, AvailabilityID = 4, LowestRarity = 5 },
+                new Unit { UnitID = 246, Name = "Ares", Epithet = "Black Knight", Entry1ID = 4, MoveTypeID = 3, WeaponTypeID = 1, AvailabilityID = 1, LowestRarity = 3 },
+                new Unit { UnitID = 701, Name = "Leif", Epithet = "Destined Scions", Entry1ID = 4, Entry2ID = 5, MoveTypeID = 3, WeaponTypeID = 11, SpecialTypeID = 2, AvailabilityID = 3, LowestRarity = 5 },
+                new Unit { UnitID = 520, Name = "Micaiah", Epithet = "Dawn Wind's Duo", Entry1ID = 10, MoveTypeID = 4, WeaponTypeID = 7, SpecialTypeID = 1, AvailabilityID = 3, LowestRarity = 5 },
+                new Unit { UnitID = 586, Name = "Hana", Epithet = "Focused Ninja", Entry1ID = 13, MoveTypeID = 1, WeaponTypeID = 3, AvailabilityID = 2, LowestRarity = 4 }
                 );
 
             modelBuilder.Entity<Slot>().HasData(

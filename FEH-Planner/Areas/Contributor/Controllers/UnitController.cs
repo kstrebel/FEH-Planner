@@ -27,8 +27,12 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             var units = new UnitListViewModel
             {
                 Units = context.Units
+                .Include(u=>u.Entry1).OrderBy(u=>u.Entry1)
+                .Include(u=>u.Entry2).OrderBy(u=>u.Entry2)
                 .Include(u => u.MoveType).OrderBy(u => u.MoveTypeID)
                 .Include(u => u.WeaponType).OrderBy(u => u.WeaponTypeID)
+                .Include(u=>u.SpecialType).OrderBy(u=>u.SpecialType)
+                .Include(u=>u.Availability).OrderBy(u=>u.Availability)
                 .ToList()
             };
 
@@ -53,8 +57,12 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             var unit = new UnitViewModel
             {
                 Unit = context.Units
+                .Include(u=>u.Entry1)
+                .Include(u=>u.Entry2)
                 .Include(u => u.MoveType)
                 .Include(u => u.WeaponType)
+                .Include(u=>u.SpecialType)
+                .Include(u=>u.Availability)
                 .FirstOrDefault(u => u.UnitID == id)
             };
             
@@ -78,8 +86,11 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             var model = new UnitViewModel
             {
                 Unit = new Unit { UnitID = 0 },
+                Entries = context.Entries.OrderBy(u => u.EntryID).ToList(),
                 MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList(),
-                WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList()
+                WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList(),
+                SpecialTypes = context.SpecialTypes.OrderBy(u => u.SpecialTypeID).ToList(),
+                Availabilities = context.Availabilities.OrderBy(u => u.AvailabilityID).ToList()
             };
 
             return View("Edit", model);
@@ -102,13 +113,16 @@ namespace FEH_Planner.Areas.Contributor.Controllers
 
             var model = new UnitViewModel
             {
-                Unit = context.Units.FirstOrDefault(u=>u.UnitID==id),
+                Unit = context.Units.FirstOrDefault(u => u.UnitID == id),
+                Entries = context.Entries.OrderBy(u => u.EntryID).ToList(),
                 MoveTypes = context.MoveTypes.OrderBy(u => u.MoveTypeID).ToList(),
-                WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList()
+                WeaponTypes = context.WeaponTypes.OrderBy(u => u.WeaponTypeID).ToList(),
+                SpecialTypes = context.SpecialTypes.OrderBy(u => u.SpecialTypeID).ToList(),
+                Availabilities = context.Availabilities.OrderBy(u => u.AvailabilityID).ToList()
             };
 
             //var unit = await context.Units.FindAsync(id);
-            
+
             if (model == null)
             {
                 return NotFound();
@@ -189,8 +203,12 @@ namespace FEH_Planner.Areas.Contributor.Controllers
             var model= new UnitViewModel
             {
                 Unit = context.Units
+                .Include(u=>u.Entry1)
+                .Include(u=>u.Entry2)
                 .Include(u=>u.MoveType)
                 .Include(u=>u.WeaponType)
+                .Include(u=>u.SpecialType)
+                .Include(u=>u.Availability)
                 .FirstOrDefault(u => u.UnitID == id)
             };
 

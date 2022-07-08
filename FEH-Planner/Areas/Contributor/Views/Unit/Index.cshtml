@@ -29,22 +29,22 @@
         <tbody>
             @foreach (Unit unit in Model.Units)
             {
-                <tr>
-                    <td>@unit.Name</td>
-                    <td>@unit.Epithet</td>
-                    <td>@unit.Entry1</td>
-                    <td>@((unit.Entry2==null) ? "": unit.Entry2)</td>
-                    <td>@unit.MoveType.Name</td>
-                    <td>@unit.WeaponType.Color @unit.WeaponType.Weapon</td>
-                    <td>@((unit.SpecialType==null)?"":unit.SpecialType)</td>
-                    <td>@unit.Availability</td>
-                    <td>@unit.LowestRarity</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@unit.UnitID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@unit.UnitID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@unit.UnitID">Delete</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>@unit.Name</td>
+                <td>@unit.Epithet</td>
+                <td>@unit.Entry1.Name</td>
+                <td>@((unit.Entry2==null) ? "": unit.Entry2.Name)</td>
+                <td>@unit.MoveType.Name</td>
+                <td>@unit.WeaponType.Color @unit.WeaponType.Weapon</td>
+                <td>@((unit.SpecialType==null)?"":unit.SpecialType.Name)</td>
+                <td>@unit.Availability.Name</td>
+                <td>@unit.LowestRarity</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@unit.UnitID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@unit.UnitID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@unit.UnitID">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

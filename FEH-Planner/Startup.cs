@@ -36,7 +36,10 @@ namespace FEH_Planner
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
-            services.AddDbContext<FEHPlannerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FEHPlannerContext"))); //from appsettings.json
+            services.AddDbContext<FEHPlannerContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("FEHPlannerContext"));
+                options.EnableSensitiveDataLogging();
+            }); //from appsettings.json
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

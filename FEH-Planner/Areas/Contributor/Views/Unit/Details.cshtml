@@ -17,27 +17,27 @@
         <dd class="col-sm-10">@Model.Unit.Epithet</dd>
 
         <dt class="col-sm-2">Entry 1</dt>
-        <dd class="col-sm-10">@Model.Unit.Entry1</dd>
+        <dd class="col-sm-10">@((Model.Unit.Entry1==null)?"":Model.Unit.Entry1.Name)</dd>
 
         <dt class="col-sm-2">Entry 2</dt>
-        <dd class="col-sm-10">@Model.Unit.Entry2</dd>
+        <dd class="col-sm-10">@((Model.Unit.Entry2==null) ? "": Model.Unit.Entry2.Name)</dd>
 
         <dt class="col-sm-2">Move Type</dt>
-        <dd class="col-sm-10">@Model.Unit.MoveType.Name</dd>
+        <dd class="col-sm-10">@((Model.Unit.MoveType==null)?"":Model.Unit.MoveType.Name)</dd>
 
         <dt class="col-sm-2">Weapon Type</dt>
         <dd class="col-sm-10">
-            @if (Model.Unit.WeaponType.WeaponTypeID > 3)
+            @if (Model.Unit.WeaponType != null && Model.Unit.WeaponType.WeaponTypeID > 3)
             {
                 @Model.Unit.WeaponType.Color
             }
             @Model.Unit.WeaponType.Weapon
         </dd>
         <dt class="col-sm-2">Special Type</dt>
-        <dd class="col-sm-10">@Model.Unit.SpecialType</dd>
+        <dd class="col-sm-10">@((Model.Unit.SpecialType==null)?"":Model.Unit.SpecialType.Name)</dd>
 
         <dt class="col-sm-2">Availability</dt>
-        <dd class="col-sm-10">@Model.Unit.Availability</dd>
+        <dd class="col-sm-10">@((Model.Unit.Availability==null)?"":Model.Unit.Availability.Name)</dd>
 
         <dt class="col-sm-2">Lowest Rarity</dt>
         <dd class="col-sm-10">@Model.Unit.LowestRarity</dd>
